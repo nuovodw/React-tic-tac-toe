@@ -12,7 +12,10 @@ constructor(props) {
 
   render() {
     return (
-      <button className="square" onClick={() => {console.log('click');}}>
+      <button 
+      className="square" 
+      onClick={()=>this.props.onClick()}
+      >
         {this.props.value}
       </button>
     );
@@ -21,8 +24,25 @@ constructor(props) {
 
 
 class Board extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      squaures: Array(9).fill(null),
+    };
+  }
+
+  handleClick(i) {
+    const squares = this.state.squares.slice();
+    squares[i] = "X";
+    this.setState({squaures: squares})
+  }
+  
   renderSquare(i) {
-    return <Square value={i} />;
+    return (
+    <Square 
+    value={this.state.squaures[i]}
+    onClick={()=>this.handleClick(i)} />
+    );
   }
 
   render() {
